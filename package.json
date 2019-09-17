@@ -1,0 +1,20 @@
+{
+  "name": "pray4friends",
+  "version": "1.0.0",
+  "description": "Bot serves to identify who should pray next for our unbeliever's friends",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon --exec ts-node src/index.ts --watch src"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^7.0.52",
+    "ts-jest": "^21.2.4",
+    "ts-node": "^4.0.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
+  },
+  "resolutions": {
+    "natives": "1.1.6"
+  }
+}
