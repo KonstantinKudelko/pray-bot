@@ -4,9 +4,13 @@
   "description": "Bot serves to identify who should pray next for our unbeliever's friends",
   "license": "ISC",
   "scripts": {
+    "build": "tsc",
     "start": "nodemon --exec ts-node src/index.ts --watch src"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "telegraf": "^3.32.0"
+  },
   "devDependencies": {
     "@types/node": "^7.0.52",
     "ts-jest": "^21.2.4",
