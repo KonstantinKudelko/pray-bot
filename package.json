@@ -1,7 +1,7 @@
 {
   "name": "pray-bot",
   "version": "1.0.0",
-  "description": "Bot serves to identify who should pray next for our unbeliever's friends",
+  "description": "Prayer diary",
   "license": "ISC",
   "scripts": {
     "build": "tsc",
