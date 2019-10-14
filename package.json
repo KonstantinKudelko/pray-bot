@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "dotenv": "^8.1.0",
+    "mongoose": "^5.7.4",
     "nodemon": "1.19.3",
-    "telegraf": "^3.32.0"
+    "telegraf": "^3.32.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.5.20",
     "@types/node": "^7.0.52",
     "ts-jest": "^24.1.0",
     "ts-node": "4.1.0",
