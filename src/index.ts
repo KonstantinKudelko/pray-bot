@@ -1,9 +1,14 @@
 require('dotenv').config();
-import Telegraf from 'telegraf';
+
+import * as path from 'path';
+import Stage from 'telegraf/stage';
+import session from 'telegraf/session';
+import TelegrafI18n from 'telegraf-i18n';
 import { connect, connection } from 'mongoose';
+import Telegraf, { ContextMessageUpdate } from 'telegraf';
 
 import { logger } from './utils/logger.util';
-import { getMainKeyboard } from './utils/keyboard.util';
+import { startScene } from './controllers/start';
 
 connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -19,9 +24,21 @@ connect(process.env.DB_CONNECTION_STRING, {
 
 connection.on('open', () => {
   const bot = new Telegraf(process.env.BOT_TOKEN);
-  const { mainKeyboard } = getMainKeyboard();
+  const stage = new Stage([startScene]);
 
-  bot.start(ctx => ctx.reply('Welcome', mainKeyboard));
+  const i18n = new TelegrafI18n({
+    defaultLanguage: 'ru',
+    directory: path.resolve(__dirname, 'locales'),
+    useSession: true,
+    allowMissing: false,
+    sessionName: 'session',
+  });
+
+  bot.use(session());
+  bot.use(i18n.middleware());
+  bot.use(stage.middleware());
+
+  bot.start((ctx: ContextMessageUpdate) => ctx.scene.enter('start'));
 
   bot.launch();
 });
