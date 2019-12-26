@@ -1,8 +1,0 @@
-{
-  "scenes": {
-    "start": {
-      "comeback_message": "Hello! We are glad that you are back! Create prayer needs, He will answer!",
-      "successfully_created_account": "Your account has been created successfully! We will send you information on how to use this bot."
-    }
-  }
-}

@@ -488,7 +488,7 @@ debug@^3.1.0, debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.1:
+debug@^4.0.1, debug@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
@@ -1987,6 +1987,13 @@ telegraf-i18n@^6.6.0:
     compile-template "^0.3.1"
     debug "^4.0.1"
     js-yaml "^3.6.1"
+
+telegraf-widget@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/telegraf-widget/-/telegraf-widget-0.1.0.tgz#cbfeac48c373532307936d9107cf0ccd4e51b44d"
+  integrity sha512-emrgzjiXeIoCKnpIFfVONL4UCpANN/wA5vOroxd9hVTbRan7EFMoLtQOAw5rBQmeMhIiAr35J7KF85t+Ad5lbQ==
+  dependencies:
+    debug "^4.1.0"
 
 telegraf@^3.34.1:
   version "3.34.1"

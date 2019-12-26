@@ -5,6 +5,8 @@ declare module 'telegraf' {
     i18n: I18n;
     scene: {
       enter: (x: string) => void;
+      leave: () => void;
     };
+    widget: any;
   }
 }

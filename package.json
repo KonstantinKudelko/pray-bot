@@ -13,16 +13,17 @@
     "mongoose": "^5.7.4",
     "telegraf": "^3.34.1",
     "telegraf-i18n": "^6.6.0",
+    "telegraf-widget": "^0.1.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/mongoose": "^5.5.20",
     "@types/node": "^10.10.0",
+    "nodemon": "1.19.3",
     "ts-jest": "^24.1.0",
     "ts-node": "4.1.0",
     "tslint": "^5.8.0",
-    "typescript": "3.6.3",
-    "nodemon": "1.19.3"
+    "typescript": "3.6.3"
   },
   "resolutions": {
     "natives": "1.1.6"

@@ -1,0 +1,10 @@
+{
+  "widgets": {
+    "start": {
+      "welcome": "Hello!"
+    }
+  },
+  "common": {
+    "language_updated": "Language successfully changed 🙌"
+  }
+}
