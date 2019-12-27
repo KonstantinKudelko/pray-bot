@@ -1,7 +1,8 @@
 {
   "widgets": {
     "start": {
-      "welcome": "Hello!"
+      "welcome": "Hi 👋 We are glad that you have joined us! Here you can create prayer needs, track their status, and we will remind you to pray for them 🙏",
+      "welcome_back": "Hi, we are glad to see you again 👋 Check your prayer needs and pray!"
     }
   },
   "common": {
