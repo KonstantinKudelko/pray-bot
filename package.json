@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "dotenv": "^8.1.0",
-    "mongoose": "^5.7.4",
+    "mongoose": "^5.8.3",
     "telegraf": "^3.34.1",
     "telegraf-i18n": "^6.6.0",
     "telegraf-widget": "^0.1.0",
