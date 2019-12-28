@@ -14,7 +14,7 @@ export const UserSchema = new Schema(
   {
     _id: String,
     name: String,
-    number: [NeedSchema],
+    needs: [NeedSchema],
     username: String,
     totalNeeds: Number,
   },
