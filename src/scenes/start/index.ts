@@ -1,7 +1,7 @@
 import Scene from 'telegraf/scenes/base';
 import { ContextMessageUpdate } from 'telegraf';
 
-import { SCENES } from '../lib/scenes';
+import { SCENES } from '../lib/constants';
 import { UserModel } from '../../models';
 import { getMainKeyboard } from '../../lib/keyboards';
 

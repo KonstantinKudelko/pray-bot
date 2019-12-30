@@ -7,6 +7,10 @@
     "create_need": {
       "welcome": "Create a need by sending it as a message to us.",
       "success_message": "Hurray, your prayer is created 🎉 \nNow you can track its status!"
+    },
+    "list_need": {
+      "welcome": "Here you can track the status of your prayers. \n\n🙏 - means that you are actively praying for this need. \n✅ - means that the Father answered your need.",
+      "available_action": "Try to click on a prayer. \nSo you can change her status or delete her."
     }
   },
   "keyboards": {

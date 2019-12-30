@@ -2,14 +2,9 @@ import Scene from 'telegraf/scenes/base';
 import { match } from 'telegraf-i18n';
 import { ContextMessageUpdate, Stage } from 'telegraf';
 
-import { SCENES } from '../lib/scenes';
 import { Need, UserModel } from '../../models';
+import { SCENES, NEED_STATUS } from '../lib/constants';
 import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
-
-const NEED_STATUS = Object.freeze({
-  ACTIVE: 'active',
-  ANSWERED: 'answered',
-});
 
 const { leave } = Stage;
 export const createNeedScene = new Scene(SCENES.CREATE_NEED);
