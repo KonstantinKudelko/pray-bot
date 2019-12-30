@@ -11,12 +11,10 @@ import { getNeedControlMenu } from './lib/need-control-menu';
 
 export const listNeedScene = new Scene(SCENES.LIST_NEED);
 
-listNeedScene.enter(async ({ from, reply, i18n, session }: ContextMessageUpdate) => {
+listNeedScene.enter(async ({ from, reply, i18n }: ContextMessageUpdate) => {
   const { id } = from;
   const { backKeyboard } = getBackKeyboard(i18n);
   const { needs } = await UserModel.findById(id);
-
-  session.needs = needs;
 
   await reply(i18n.t('scenes.list_need.available_action'), backKeyboard);
   await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(needs));
@@ -34,11 +32,11 @@ listNeedScene.action(
 
 listNeedScene.action(
   /back/,
-  async ({ i18n, editMessageText, answerCbQuery, session }: ContextMessageUpdate) => {
-    await editMessageText(
-      i18n.t('scenes.list_need.welcome'),
-      getNeedsList(session.needs),
-    );
+  async ({ i18n, from, editMessageText, answerCbQuery }: ContextMessageUpdate) => {
+    const { id } = from;
+    const user = await UserModel.findById(id);
+
+    await editMessageText(i18n.t('scenes.list_need.welcome'), getNeedsList(user.needs));
     await answerCbQuery();
   },
 );
