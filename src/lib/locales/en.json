@@ -10,7 +10,9 @@
     },
     "list_need": {
       "welcome": "Here you can track the status of your prayers. \n\n🙏 - means that you are actively praying for this need. \n✅ - means that the Father answered your need.",
-      "available_action": "Try to click on a prayer. \nSo you can change her status or delete her."
+      "available_action": "Try to click on a prayer. \nSo you can change her status or delete her.",
+      "delete_button": "Delete ❌",
+      "edit_status_button": "God answered 💫"
     }
   },
   "keyboards": {

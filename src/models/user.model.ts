@@ -1,11 +1,10 @@
-import { Document, Schema, model } from 'mongoose';
+import { Document, Schema, model, Types } from 'mongoose';
 
 import { Need, NeedSchema } from './need.model';
 
 export interface User extends Document {
-  _id: string;
   name: string;
-  needs: Need[];
+  needs: Types.Array<Need>;
   username: string;
   totalNeeds: number;
 }

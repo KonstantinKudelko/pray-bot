@@ -9,7 +9,7 @@ export interface Need extends Document {
 }
 
 export const NeedSchema = new Schema({
-  _id: String,
+  _id: { type: Schema.Types.ObjectId, auto: true },
   name: String,
   status: String,
 });

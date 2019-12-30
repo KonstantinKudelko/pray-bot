@@ -2,8 +2,8 @@ import Scene from 'telegraf/scenes/base';
 import { match } from 'telegraf-i18n';
 import { ContextMessageUpdate, Stage } from 'telegraf';
 
-import { Need, UserModel } from '../../models';
 import { SCENES, NEED_STATUS } from '../lib/constants';
+import { UserModel, NeedModel } from '../../models';
 import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
 
 const { leave } = Stage;
@@ -32,10 +32,12 @@ createNeedScene.on(
     const user = await UserModel.findById(id);
 
     ++user.totalNeeds;
-    user.needs.push({
-      name: text,
-      status: NEED_STATUS.ACTIVE,
-    } as Need);
+    user.needs.push(
+      new NeedModel({
+        name: text,
+        status: NEED_STATUS.ACTIVE,
+      }),
+    );
 
     await user.save();
     await reply(i18n.t('scenes.create_need.success_message', mainKeyboard));
