@@ -2,16 +2,16 @@ import Scene from 'telegraf/scenes/base';
 import { Document } from 'mongoose';
 import { ContextMessageUpdate } from 'telegraf';
 
-import { SCENES, NEED_STATUS } from '../lib/constants';
-import { UserModel, Need } from '../../models';
+import { UserModel } from '../../models';
 import { exposeNeed } from './lib/need-middleware';
 import { getNeedsList } from './lib/need-list';
 import { getBackKeyboard } from '../../lib/keyboards';
 import { getNeedControlMenu } from './lib/need-control-menu';
+import { SCENES, NEED_STATUS } from '../lib/constants';
 
 export const listNeedScene = new Scene(SCENES.LIST_NEED);
 
-listNeedScene.enter(async ({ from, reply, i18n }: ContextMessageUpdate) => {
+listNeedScene.enter(async ({ from, reply, i18n, session }: ContextMessageUpdate) => {
   const { id } = from;
   const { backKeyboard } = getBackKeyboard(i18n);
   const { needs } = await UserModel.findById(id);

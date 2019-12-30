@@ -1,11 +1,12 @@
 import { ContextMessageUpdate } from 'telegraf';
 
-import { Need } from '../../../../models';
+import { Need, UserModel } from '../../../../models';
 
-export const exposeNeed = (ctx: ContextMessageUpdate, next: () => void) => {
+export const exposeNeed = async (ctx: ContextMessageUpdate, next: () => void) => {
   const { payload } = JSON.parse(ctx.callbackQuery.data);
+  const { needs } = await UserModel.findById(ctx.from.id);
 
-  ctx.need = ctx.session.needs.find((item: Need) => item._id.toString() === payload);
+  ctx.need = needs.find((item: Need) => item._id.toString() === payload);
 
   return next();
 };
