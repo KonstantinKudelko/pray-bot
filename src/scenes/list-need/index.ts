@@ -1,56 +1,13 @@
-import I18n from 'telegraf-i18n';
 import Scene from 'telegraf/scenes/base';
-import { ContextMessageUpdate, Extra, Markup } from 'telegraf';
+import { Document } from 'mongoose';
+import { ContextMessageUpdate } from 'telegraf';
 
-import { UserModel, Need } from '../../models';
-import { getBackKeyboard } from '../../lib/keyboards';
 import { SCENES, NEED_STATUS } from '../lib/constants';
-
-const getNeedsList = (needs: Need[]) =>
-  Extra.HTML().markup((m: Markup) =>
-    m.inlineKeyboard(
-      needs.map(x => [
-        m.callbackButton(
-          `${x.name} ${x.status === NEED_STATUS.ACTIVE ? ' ➖ 🙏' : ' ➖ ✅'}`,
-          JSON.stringify({ action: 'need', payload: x._id.toString() }),
-          false,
-        ),
-      ]),
-      {},
-    ),
-  );
-
-const getNeedControlMenu = (i18n: I18n, id: string) =>
-  Extra.HTML().markup((m: Markup) =>
-    m.inlineKeyboard(
-      [
-        m.callbackButton(
-          i18n.t('scenes.list_need.delete_button'),
-          JSON.stringify({ action: 'delete', payload: id }),
-          false,
-        ),
-        m.callbackButton(
-          i18n.t('scenes.list_need.edit_status_button'),
-          JSON.stringify({ action: 'edit_status', payload: id }),
-          false,
-        ),
-        m.callbackButton(
-          i18n.t('keyboards.back.button'),
-          JSON.stringify({ action: 'back', payload: undefined }),
-          false,
-        ),
-      ],
-      {},
-    ),
-  );
-
-const exposeNeed = (ctx: ContextMessageUpdate, next: () => void) => {
-  const { payload } = JSON.parse(ctx.callbackQuery.data);
-
-  ctx.need = ctx.session.needs.find((item: Need) => item._id.toString() === payload);
-
-  return next();
-};
+import { UserModel, Need } from '../../models';
+import { exposeNeed } from './lib/need-middleware';
+import { getNeedsList } from './lib/need-list';
+import { getBackKeyboard } from '../../lib/keyboards';
+import { getNeedControlMenu } from './lib/need-control-menu';
 
 export const listNeedScene = new Scene(SCENES.LIST_NEED);
 
@@ -61,8 +18,8 @@ listNeedScene.enter(async ({ from, reply, i18n, session }: ContextMessageUpdate)
 
   session.needs = needs;
 
-  await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(needs));
   await reply(i18n.t('scenes.list_need.available_action'), backKeyboard);
+  await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(needs));
 });
 
 listNeedScene.action(
@@ -71,6 +28,62 @@ listNeedScene.action(
   async ({ i18n, editMessageText, callbackQuery, need }: ContentMessageUpdate) => {
     const { payload } = JSON.parse(callbackQuery.data);
 
-    await editMessageText(`${need.name}`, getNeedControlMenu(i18n, payload));
+    await editMessageText(`${need.name}`, getNeedControlMenu(i18n, need, payload));
+  },
+);
+
+listNeedScene.action(
+  /back/,
+  async ({ i18n, editMessageText, answerCbQuery, session }: ContextMessageUpdate) => {
+    await editMessageText(
+      i18n.t('scenes.list_need.welcome'),
+      getNeedsList(session.needs),
+    );
+    await answerCbQuery();
+  },
+);
+
+listNeedScene.action(
+  /edit_status/,
+  async ({
+    i18n,
+    from,
+    editMessageText,
+    callbackQuery,
+    answerCbQuery,
+  }: ContextMessageUpdate) => {
+    const { id } = from;
+    const { payload } = JSON.parse(callbackQuery.data);
+    const user = await UserModel.findById(id);
+    const needs = (user.needs as unknown) as Document;
+
+    needs.id(payload).set({ status: NEED_STATUS.ANSWERED });
+    await user.save();
+
+    await editMessageText(i18n.t('scenes.list_need.welcome'), getNeedsList(user.needs));
+    await answerCbQuery();
+  },
+);
+
+listNeedScene.action(
+  /delete/,
+  async ({
+    i18n,
+    from,
+    callbackQuery,
+    editMessageText,
+    answerCbQuery,
+  }: ContextMessageUpdate) => {
+    const { id } = from;
+    const { payload } = JSON.parse(callbackQuery.data);
+    const user = await UserModel.findById(id);
+    const needs = user.needs;
+
+    --user.totalNeeds;
+    needs.pull(payload);
+    await user.save();
+
+    await editMessageText(i18n.t('scenes.list_need.welcome'), getNeedsList(user.needs));
+    await answerCbQuery();
   },
 );

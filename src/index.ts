@@ -14,6 +14,7 @@ import { SCENES, startScene, createNeedScene, listNeedScene } from './scenes';
 
 connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
+  useFindAndModify: false,
   useUnifiedTopology: true,
 })
   .then(() => logger.info('Successfull database connection'))
