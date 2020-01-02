@@ -488,7 +488,7 @@ debug@^3.1.0, debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.1, debug@^4.1.0:
+debug@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
@@ -2009,13 +2009,6 @@ telegraf-i18n@^6.6.0:
     debug "^4.0.1"
     js-yaml "^3.6.1"
 
-telegraf-widget@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/telegraf-widget/-/telegraf-widget-0.1.0.tgz#cbfeac48c373532307936d9107cf0ccd4e51b44d"
-  integrity sha512-emrgzjiXeIoCKnpIFfVONL4UCpANN/wA5vOroxd9hVTbRan7EFMoLtQOAw5rBQmeMhIiAr35J7KF85t+Ad5lbQ==
-  dependencies:
-    debug "^4.1.0"
-
 telegraf@^3.34.1:
   version "3.34.1"
   resolved "https://registry.yarnpkg.com/telegraf/-/telegraf-3.34.1.tgz#69006497f8ea4badd724164ae913cef643726719"
@@ -2165,6 +2158,11 @@ typescript@3.6.3:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.3.tgz#fea942fabb20f7e1ca7164ff626f1a9f3f70b4da"
   integrity sha512-N7bceJL1CtRQ2RiG0AQME13ksR7DiuQh/QehubYcghzv20tnh+MQnQIuJddTmsbqYj+dztchykemz0zFzlvdQw==
+
+tz-lookup@^6.1.25:
+  version "6.1.25"
+  resolved "https://registry.yarnpkg.com/tz-lookup/-/tz-lookup-6.1.25.tgz#34d68a7e1ccfcb51f29a9893d2d48e4118d873cd"
+  integrity sha512-fFewT9o1uDzsW1QnUU1ValqaihFnwiUiiHr1S79/fxOzKXYYvX+EHeRnpvQJ9B3Qg67wPXT6QF2Esc4pFOrvLg==
 
 undefsafe@^2.0.2:
   version "2.0.2"

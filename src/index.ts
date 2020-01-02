@@ -10,7 +10,13 @@ import Stage from 'telegraf/stage';
 
 import { logger } from './lib/logger';
 import { getMainKeyboard } from './lib/keyboards';
-import { SCENES, startScene, createNeedScene, listNeedScene } from './scenes';
+import {
+  SCENES,
+  startScene,
+  remindScene,
+  listNeedScene,
+  createNeedScene,
+} from './scenes';
 
 connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -27,7 +33,7 @@ connect(process.env.DB_CONNECTION_STRING, {
 
 connection.on('open', () => {
   const bot = new Telegraf(process.env.BOT_TOKEN);
-  const stage = new Stage([startScene, listNeedScene, createNeedScene]);
+  const stage = new Stage([startScene, listNeedScene, remindScene, createNeedScene]);
 
   const i18nTelegraf = new TelegrafI18n({
     defaultLanguage: 'ru',
@@ -49,6 +55,10 @@ connection.on('open', () => {
   bot.hears(
     match('keyboards.main.list_needs'),
     async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.LIST_NEED),
+  );
+  bot.hears(
+    match('keyboards.main.remind'),
+    async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.REMIND),
   );
 
   bot.hears(

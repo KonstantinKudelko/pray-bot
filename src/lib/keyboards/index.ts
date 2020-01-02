@@ -34,16 +34,19 @@ const getLanguageKeyboard = () =>
   );
 
 const getMainKeyboard = (i18n: I18n) => {
-  const mainKeyboardCreatePrayer = i18n.t('keyboards.main.create');
+  const mainKeyboardRemind = i18n.t('keyboards.main.remind');
   const mainKeyboardGetAllNeeds = i18n.t('keyboards.main.list_needs');
+  const mainKeyboardCreatePrayer = i18n.t('keyboards.main.create');
   const mainKeyboard = Markup.keyboard([
     [mainKeyboardCreatePrayer, mainKeyboardGetAllNeeds],
+    [mainKeyboardRemind],
   ])
     .resize()
     .extra();
 
   return {
     mainKeyboard,
+    mainKeyboardRemind,
     mainKeyboardGetAllNeeds,
     mainKeyboardCreatePrayer,
   };

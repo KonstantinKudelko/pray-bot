@@ -1,6 +1,7 @@
 import { SCENES } from './lib/constants';
 import { startScene } from './start';
+import { remindScene } from './remind';
 import { listNeedScene } from './list-need';
 import { createNeedScene } from './create-need';
 
-export { SCENES, startScene, listNeedScene, createNeedScene };
+export { SCENES, remindScene, startScene, listNeedScene, createNeedScene };

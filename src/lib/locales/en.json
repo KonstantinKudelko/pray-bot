@@ -14,12 +14,17 @@
       "delete_button": "Delete ❌",
       "edit_status_button": "God answered 💫",
       "empty_list_of_needs": "You have no created needs. Press 🙏 to create a need."
+    },
+    "remind": {
+      "welcome": "You can set a time at which we will remind you to pray about your needs. \nSend your location 📍 in response to this message so that we can set your time zone 🕔",
+      "success_timezone": "Successfully set timezone:"
     }
   },
   "keyboards": {
     "main": {
       "create": "Create need 🙏",
-      "list_needs": "Check needs 👀"
+      "list_needs": "Check needs 👀",
+      "remind": "Remind ⏰"
     },
     "back": {
       "button": "⬅️ Back"

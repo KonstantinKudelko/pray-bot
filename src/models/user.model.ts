@@ -6,6 +6,7 @@ export interface User extends Document {
   name: string;
   needs: Types.Array<Need>;
   username: string;
+  timezone: string;
   totalNeeds: number;
 }
 
@@ -15,6 +16,7 @@ export const UserSchema = new Schema(
     name: String,
     needs: [NeedSchema],
     username: String,
+    timezone: String,
     totalNeeds: Number,
   },
   { _id: false, timestamps: true },
