@@ -16,8 +16,12 @@ listNeedScene.enter(async ({ from, reply, i18n, session }: ContextMessageUpdate)
   const { backKeyboard } = getBackKeyboard(i18n);
   const { needs } = await UserModel.findById(id);
 
-  await reply(i18n.t('scenes.list_need.available_action'), backKeyboard);
-  await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(needs));
+  if (needs.length) {
+    await reply(i18n.t('scenes.list_need.available_action'), backKeyboard);
+    await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(needs));
+  } else {
+    await reply(i18n.t('scenes.list_need.empty_list_of_needs'));
+  }
 });
 
 listNeedScene.action(
