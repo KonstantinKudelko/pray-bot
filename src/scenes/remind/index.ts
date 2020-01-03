@@ -1,12 +1,14 @@
 import Scene from 'telegraf/scenes/base';
 import schedule from 'node-schedule';
 import tzlookup from 'tz-lookup';
-import { ContextMessageUpdate } from 'telegraf';
+import { ContextMessageUpdate, Extra, Markup } from 'telegraf';
 
 import { bot } from '../../bot';
 import { SCENES } from '../lib/constants';
 import { UserModel } from '../../models';
+import { getRandomNeeds } from './lib/random-needs';
 import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
+import { randomNeedsList } from './lib/random-needs-list';
 
 export const remindScene = new Scene(SCENES.REMIND);
 
@@ -46,7 +48,7 @@ remindScene.hears(
     const time = match[0];
     const { mainKeyboard } = getMainKeyboard(i18n);
 
-    const { timezone, timeForReminder } = await UserModel.findByIdAndUpdate(
+    const { timezone, timeForReminder, needs } = await UserModel.findByIdAndUpdate(
       {
         _id: id.toString(),
       },
@@ -58,9 +60,14 @@ remindScene.hears(
     const splittedTime = timeForReminder.split(':');
     const hour = splittedTime[0];
     const minute = splittedTime[1];
+    const randomNeeds = getRandomNeeds(needs);
 
-    schedule.scheduleJob({ hour, minute }, () =>
-      bot.telegram.sendMessage(id, 'PRAAAY!!!'),
+    schedule.scheduleJob({ hour, minute, tz: timezone }, () =>
+      bot.telegram.sendMessage(
+        id,
+        i18n.t('scenes.remind.reminder_message'),
+        randomNeedsList(randomNeeds),
+      ),
     );
 
     await reply(
