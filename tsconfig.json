@@ -14,5 +14,5 @@
       "*": ["node_modules/*", "src/lib/types/*"]
     }
   },
-  "include": ["src/**/*", "src/locales/*.json"]
+  "include": ["src/**/*", "src/lib/locales/*.json"]
 }
