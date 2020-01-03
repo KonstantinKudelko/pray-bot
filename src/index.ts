@@ -1,13 +1,12 @@
-require('dotenv').config();
-
 import * as path from 'path';
 import session from 'telegraf/session';
 import TelegrafI18n, { match } from 'telegraf-i18n';
 import { connect, connection } from 'mongoose';
-import Telegraf, { ContextMessageUpdate } from 'telegraf';
+import { ContextMessageUpdate } from 'telegraf';
 
 import Stage from 'telegraf/stage';
 
+import { bot } from './bot';
 import { logger } from './lib/logger';
 import { getMainKeyboard } from './lib/keyboards';
 import {
@@ -32,7 +31,6 @@ connect(process.env.DB_CONNECTION_STRING, {
   );
 
 connection.on('open', () => {
-  const bot = new Telegraf(process.env.BOT_TOKEN);
   const stage = new Stage([startScene, listNeedScene, remindScene, createNeedScene]);
 
   const i18nTelegraf = new TelegrafI18n({

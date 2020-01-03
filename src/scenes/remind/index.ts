@@ -1,10 +1,12 @@
 import Scene from 'telegraf/scenes/base';
+import schedule from 'node-schedule';
 import tzlookup from 'tz-lookup';
 import { ContextMessageUpdate } from 'telegraf';
 
+import { bot } from '../../bot';
 import { SCENES } from '../lib/constants';
 import { UserModel } from '../../models';
-import { getBackKeyboard } from '../../lib/keyboards';
+import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
 
 export const remindScene = new Scene(SCENES.REMIND);
 
@@ -32,9 +34,40 @@ remindScene.on(
       },
     );
 
+    await reply(`${i18n.t('scenes.remind.success_timezone')} ${timezone} 📍`);
+    await reply(i18n.t('scenes.remind.set_time'), backKeyboard);
+  },
+);
+
+remindScene.hears(
+  /\d+:\d+/,
+  async ({ i18n, from, reply, match }: ContextMessageUpdate) => {
+    const { id } = from;
+    const time = match[0];
+    const { mainKeyboard } = getMainKeyboard(i18n);
+
+    const { timezone, timeForReminder } = await UserModel.findByIdAndUpdate(
+      {
+        _id: id.toString(),
+      },
+      {
+        $set: { timeForReminder: time },
+      },
+      { new: true },
+    );
+    const splittedTime = timeForReminder.split(':');
+    const hour = splittedTime[0];
+    const minute = splittedTime[1];
+
+    schedule.scheduleJob({ hour, minute }, () =>
+      bot.telegram.sendMessage(id, 'PRAAAY!!!'),
+    );
+
     await reply(
-      `${i18n.t('scenes.remind.success_timezone')} ${timezone} 📍`,
-      backKeyboard,
+      `${i18n.t('scenes.remind.reminder_info')} \n${i18n.t(
+        'common.time',
+      )} ${timeForReminder} \n${i18n.t('common.timezone')} ${timezone} `,
+      mainKeyboard,
     );
   },
 );

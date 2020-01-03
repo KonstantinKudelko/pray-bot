@@ -8,6 +8,7 @@ export interface User extends Document {
   username: string;
   timezone: string;
   totalNeeds: number;
+  timeForReminder: string;
 }
 
 export const UserSchema = new Schema(
@@ -18,6 +19,7 @@ export const UserSchema = new Schema(
     username: String,
     timezone: String,
     totalNeeds: Number,
+    timeForReminder: String,
   },
   { _id: false, timestamps: true },
 );
