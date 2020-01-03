@@ -27,7 +27,7 @@ listNeedScene.enter(async ({ from, reply, i18n, session }: ContextMessageUpdate)
 listNeedScene.action(
   /need/,
   exposeNeed,
-  async ({ i18n, editMessageText, callbackQuery, need }: ContentMessageUpdate) => {
+  async ({ i18n, editMessageText, callbackQuery, need }: ContextMessageUpdate) => {
     const { payload } = JSON.parse(callbackQuery.data);
 
     await editMessageText(`${need.name}`, getNeedControlMenu(i18n, need, payload));
