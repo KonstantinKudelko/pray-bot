@@ -21,13 +21,17 @@
       "set_time": "A time has been set at which the bot will remind you to pray. \n\nTime for determining a specific format, for example: \n14:20 \n01:30  \n22:00 \n00:00. \n\nTo set a time for a reminder, simply reply to this message ☄️",
       "reminder_info": "All the necessary data is installed 🎉 \n\nThe bot will select several random needs and remind you to pray for them daily according to your data: \n",
       "reminder_message": "Pray to the Father for these needs 🙏"
+    },
+    "about_us": {
+      "welcome": "We are a Christian resource 📖 \n http://instagram.com/stories/ke.podcast \n\nOur efforts are aimed at developing the Christian community of Russian-speaking countries. We try to make healthy products for the community and talk about Christ out loud! \n\nIf you notice any errors, you can tell us about it here 🐛 \nkepodcasting@gmail.com \n\nYou can find the source code of the bot here 💻 \nhttps://github.com/ke-community/pray-bot \n\nIf you want to support us, you can do it on patreon 💰 \nhttps://www.patreon.com/kepodcast"
     }
   },
   "keyboards": {
     "main": {
       "create": "Create need 🙏",
       "list_needs": "Check needs 👀",
-      "remind": "Remind ⏰"
+      "remind": "Remind ⏰",
+      "about_us": "About us 🗣"
     },
     "back": {
       "button": "⬅️ Back"

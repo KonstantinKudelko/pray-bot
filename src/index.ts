@@ -13,6 +13,7 @@ import {
   SCENES,
   startScene,
   remindScene,
+  aboutUsScene,
   listNeedScene,
   createNeedScene,
 } from './scenes';
@@ -31,7 +32,13 @@ connect(process.env.DB_CONNECTION_STRING, {
   );
 
 connection.on('open', () => {
-  const stage = new Stage([startScene, listNeedScene, remindScene, createNeedScene]);
+  const stage = new Stage([
+    startScene,
+    remindScene,
+    aboutUsScene,
+    listNeedScene,
+    createNeedScene,
+  ]);
 
   const i18nTelegraf = new TelegrafI18n({
     defaultLanguage: 'ru',
@@ -57,6 +64,10 @@ connection.on('open', () => {
   bot.hears(
     match('keyboards.main.remind'),
     async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.REMIND),
+  );
+  bot.hears(
+    match('keyboards.main.about_us'),
+    async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.ABOUT_US),
   );
 
   bot.hears(

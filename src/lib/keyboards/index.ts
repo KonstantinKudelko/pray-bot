@@ -37,9 +37,10 @@ const getMainKeyboard = (i18n: I18n) => {
   const mainKeyboardRemind = i18n.t('keyboards.main.remind');
   const mainKeyboardGetAllNeeds = i18n.t('keyboards.main.list_needs');
   const mainKeyboardCreatePrayer = i18n.t('keyboards.main.create');
+  const mainKeyboardAboutUs = i18n.t('keyboards.main.about_us');
   const mainKeyboard = Markup.keyboard([
     [mainKeyboardCreatePrayer, mainKeyboardGetAllNeeds],
-    [mainKeyboardRemind],
+    [mainKeyboardRemind, mainKeyboardAboutUs],
   ])
     .resize()
     .extra();
