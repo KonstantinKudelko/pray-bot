@@ -1,6 +1,7 @@
 import { Markup, Extra } from 'telegraf';
 
 import { Need } from '../../../../models';
+import { decrypt } from '../../../../scenes/create-need/lib/encrypt';
 import { NEED_STATUS } from '../../../../scenes/lib/constants';
 
 export const getNeedsList = (needs: Need[]) =>
@@ -8,7 +9,7 @@ export const getNeedsList = (needs: Need[]) =>
     m.inlineKeyboard(
       needs.map(x => [
         m.callbackButton(
-          `${x.name} ${x.status === NEED_STATUS.ACTIVE ? ' ➖ 🙏' : ' ➖ ✅'}`,
+          `${decrypt(x.name)} ${x.status === NEED_STATUS.ACTIVE ? ' ➖ 🙏' : ' ➖ ✅'}`,
           JSON.stringify({ action: 'need', payload: x._id.toString() }),
           false,
         ),
