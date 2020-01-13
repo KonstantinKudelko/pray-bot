@@ -1,5 +1,5 @@
 import { Need } from '../../../../models';
-import { NEED_STATUS } from '../../../../scenes/lib/constants';
+import { NEED_STATUS } from '../../../lib/constants';
 
 export const getRandomNeeds = (needs: Need[], qty = 5): Need[] => {
   const activeNeeds = needs.filter(x => x.status === NEED_STATUS.ACTIVE);

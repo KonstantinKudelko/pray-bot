@@ -2,7 +2,7 @@ import I18n from 'telegraf-i18n';
 import { Extra, Markup } from 'telegraf';
 
 import { Need } from '../../../../models';
-import { NEED_STATUS } from '../../../../scenes/lib/constants';
+import { NEED_STATUS } from '../../../lib/constants';
 
 export const getNeedControlMenu = (i18n: I18n, need: Need, id: string) =>
   Extra.HTML().markup((m: Markup) => {

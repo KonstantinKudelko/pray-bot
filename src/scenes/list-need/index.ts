@@ -5,20 +5,20 @@ import { ContextMessageUpdate } from 'telegraf';
 import { UserModel } from '../../models';
 import { exposeNeed } from './lib/need-middleware';
 import { getNeedsList } from './lib/need-list';
-import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
 import { getNeedControlMenu } from './lib/need-control-menu';
 import { SCENES, NEED_STATUS } from '../lib/constants';
+import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
 
 export const listNeedScene = new Scene(SCENES.LIST_NEED);
 
 listNeedScene.enter(async ({ from, reply, i18n }: ContextMessageUpdate) => {
   const { id } = from;
   const { backKeyboard } = getBackKeyboard(i18n);
-  const { needs } = await UserModel.findById(id);
+  const user = await UserModel.findById(id);
 
-  if (needs.length) {
+  if (user.needs.length) {
     await reply(i18n.t('scenes.list_need.available_action'), backKeyboard);
-    await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(needs));
+    await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(user.needs));
   } else {
     await reply(i18n.t('scenes.list_need.empty_list_of_needs'));
   }

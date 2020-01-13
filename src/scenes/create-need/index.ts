@@ -2,7 +2,6 @@ import Scene from 'telegraf/scenes/base';
 import { match } from 'telegraf-i18n';
 import { ContextMessageUpdate, Stage } from 'telegraf';
 
-import { encrypt } from './lib/encrypt';
 import { SCENES, NEED_STATUS } from '../lib/constants';
 import { UserModel, NeedModel } from '../../models';
 import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
@@ -35,7 +34,7 @@ createNeedScene.on(
     ++user.totalNeeds;
     user.needs.push(
       new NeedModel({
-        name: encrypt(text),
+        name: text,
         status: NEED_STATUS.ACTIVE,
       }),
     );
