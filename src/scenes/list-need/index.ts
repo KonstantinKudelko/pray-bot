@@ -16,7 +16,7 @@ listNeedScene.enter(async ({ from, reply, i18n }: ContextMessageUpdate) => {
   const { backKeyboard } = getBackKeyboard(i18n);
   const user = await UserModel.findById(id);
 
-  if (user.needs.length) {
+  if (user.needs && user.needs.length) {
     await reply(i18n.t('scenes.list_need.available_action'), backKeyboard);
     await reply(i18n.t('scenes.list_need.welcome'), getNeedsList(user.needs));
   } else {
