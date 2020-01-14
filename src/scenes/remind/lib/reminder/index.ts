@@ -23,12 +23,15 @@ export const reminder = async (
 ) => {
   const { needs } = await UserModel.findById(id);
   const randomNeeds = getRandomNeeds(needs);
+  const message = randomNeeds.length
+    ? i18n.t('scenes.remind.reminder_message')
+    : i18n.t('scenes.remind.reminder_message_empty_needs');
 
   return needsQueue.add(
     {
       userId: id,
-      message: i18n.t('scenes.remind.reminder_message'),
-      needs: randomNeedsList(randomNeeds),
+      message,
+      needs: randomNeedsList(randomNeeds, i18n.t('scenes.remind.prayed_button')),
     },
     { repeat: { cron: `${minute} ${hour} * * *`, tz: timezone } },
   );

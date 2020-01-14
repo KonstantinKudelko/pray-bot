@@ -17,6 +17,7 @@ import {
   listNeedScene,
   createNeedScene,
 } from './scenes';
+import { UserModel } from './models';
 
 connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -78,6 +79,17 @@ connection.on('open', () => {
       await reply(i18n.t('common.middleware_message'), mainKeyboard);
     },
   );
+
+  bot.action(/prayed/, async ({ from, reply, i18n }: ContextMessageUpdate) => {
+    const { id } = from;
+
+    await UserModel.findByIdAndUpdate(
+      { _id: id.toString() },
+      { $inc: { totalPrayers: 1 } },
+    );
+
+    await reply(i18n.t('scenes.remind.prayed_success_message'));
+  });
 
   bot.catch((error: Error) => logger.error('Global error has happened', error));
   bot.startPolling();

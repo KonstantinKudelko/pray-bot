@@ -52,6 +52,7 @@ listNeedScene.action(
     const user = await UserModel.findById(id);
     const needs = (user.needs as unknown) as Document;
 
+    ++user.totalAnsweredNeeds;
     needs.id(payload).set({ status: NEED_STATUS.ANSWERED });
     await user.save();
 
