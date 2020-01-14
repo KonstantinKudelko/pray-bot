@@ -80,7 +80,7 @@ connection.on('open', () => {
     },
   );
 
-  bot.action(/prayed/, async ({ from, reply, i18n }: ContextMessageUpdate) => {
+  bot.action(/prayed/, async ({ from, i18n, editMessageText }: ContextMessageUpdate) => {
     const { id } = from;
 
     await UserModel.findByIdAndUpdate(
@@ -88,7 +88,7 @@ connection.on('open', () => {
       { $inc: { totalPrayers: 1 } },
     );
 
-    await reply(i18n.t('scenes.remind.prayed_success_message'));
+    await editMessageText(i18n.t('scenes.remind.prayed_success_message'));
   });
 
   bot.catch((error: Error) => logger.error('Global error has happened', error));
