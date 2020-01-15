@@ -16,6 +16,7 @@ import {
   aboutUsScene,
   listNeedScene,
   createNeedScene,
+  statisticsScene,
 } from './scenes';
 import { UserModel } from './models';
 
@@ -38,6 +39,7 @@ connection.on('open', () => {
     remindScene,
     aboutUsScene,
     listNeedScene,
+    statisticsScene,
     createNeedScene,
   ]);
 
@@ -69,6 +71,10 @@ connection.on('open', () => {
   bot.hears(
     match('keyboards.main.about_us'),
     async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.ABOUT_US),
+  );
+  bot.hears(
+    match('keyboards.main.statistics'),
+    async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.STATISTICS),
   );
 
   bot.hears(

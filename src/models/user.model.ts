@@ -7,6 +7,7 @@ export interface User extends Document {
   needs: Types.Array<Need>;
   username: string;
   timezone: string;
+  createdAt: string;
   totalNeeds: number;
   totalPrayers: number;
   timeForReminder: string;

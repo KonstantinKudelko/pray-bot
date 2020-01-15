@@ -4,6 +4,7 @@ export const SCENES = Object.freeze({
   CREATE_NEED: 'create_need',
   REMIND: 'remind',
   ABOUT_US: 'about_us',
+  STATISTICS: 'statistics',
 });
 
 export const NEED_STATUS = Object.freeze({
