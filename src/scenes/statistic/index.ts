@@ -15,10 +15,10 @@ statisticsScene.enter(async ({ from, reply, i18n }: ContextMessageUpdate) => {
     totalAnsweredNeeds,
     createdAt,
   } = await UserModel.findById(id);
-  const diffDays = dayjs(new Date()).diff(dayjs(createdAt), 'day');
+  // const diffDays = dayjs(new Date()).diff(dayjs(createdAt), 'day');
 
   await reply(
-    `${i18n.t('scenes.statistics.app_usage_in_days')} ${diffDays} ${i18n.t(
+    `${i18n.t('scenes.statistics.app_usage_in_days')} ${'diffDays'} ${i18n.t(
       'scenes.statistics.days',
     )} \n\n${i18n.t('scenes.statistics.qty_needs')} ${totalNeeds} \n${i18n.t(
       'scenes.statistics.qty_answers',
