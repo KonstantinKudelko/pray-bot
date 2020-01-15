@@ -4,7 +4,7 @@ import { remindScene } from './remind';
 import { aboutUsScene } from './about-us';
 import { listNeedScene } from './list-need';
 import { createNeedScene } from './create-need';
-import { statisticsScene } from './statistic';
+import { statisticsScene } from './statistics';
 
 export {
   SCENES,
