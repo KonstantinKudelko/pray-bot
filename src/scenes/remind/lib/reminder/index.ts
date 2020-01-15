@@ -3,7 +3,6 @@ import Queue from 'bull';
 
 import { bot } from '../../../../bot';
 import { UserModel } from '../../../../models';
-import { prayedButton } from '../prayed-button';
 import { getRandomNeeds } from '../random-needs';
 import { randomNeedsList } from '../random-needs-list';
 
@@ -28,7 +27,11 @@ export const reminder = async (
     ? i18n.t('scenes.remind.reminder_message')
     : i18n.t('scenes.remind.reminder_message_empty_needs');
 
-  needsQueue.add(
+  const x = await needsQueue.getJobCounts();
+
+  console.log(x);
+
+  await needsQueue.add(
     {
       userId: id,
       message,
