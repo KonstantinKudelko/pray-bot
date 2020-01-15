@@ -39,8 +39,8 @@ connection.on('open', () => {
     remindScene,
     aboutUsScene,
     listNeedScene,
-    statisticsScene,
     createNeedScene,
+    statisticsScene,
   ]);
 
   const i18nTelegraf = new TelegrafI18n({
