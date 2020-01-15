@@ -27,10 +27,6 @@ export const reminder = async (
     ? i18n.t('scenes.remind.reminder_message')
     : i18n.t('scenes.remind.reminder_message_empty_needs');
 
-  const x = await needsQueue.getJobCounts();
-
-  console.log(x);
-
   await needsQueue.add(
     {
       userId: id,
