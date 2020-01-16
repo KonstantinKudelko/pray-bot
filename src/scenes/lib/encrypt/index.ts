@@ -17,18 +17,16 @@ export const encrypt = (x: string) => {
 
   return {
     iv: CRYPTO_CONFIG.IV.toString('hex'),
+    key: CRYPTO_CONFIG.KEY.toString('hex'),
     encryptedData: encrypted.toString('hex'),
   };
 };
 
-export const decrypt = (x: { iv: string; encryptedData: string }) => {
+export const decrypt = (x: { iv: string; key: string; encryptedData: string }) => {
   const iv = Buffer.from(x.iv, 'hex');
+  const key = Buffer.from(x.key, 'hex');
   const encryptedText = Buffer.from(x.encryptedData, 'hex');
-  const decipher = crypto.createDecipheriv(
-    CRYPTO_CONFIG.ALGORITHM,
-    Buffer.from(CRYPTO_CONFIG.KEY),
-    iv,
-  );
+  const decipher = crypto.createDecipheriv(CRYPTO_CONFIG.ALGORITHM, Buffer.from(key), iv);
   let decrypted = decipher.update(encryptedText);
   decrypted = Buffer.concat([decrypted, decipher.final()]);
 

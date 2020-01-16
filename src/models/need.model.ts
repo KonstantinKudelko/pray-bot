@@ -4,13 +4,13 @@ type NeedStatus = 'active' | 'answered';
 
 export interface Need extends Document {
   _id: string;
-  name: string;
+  name: { iv: string; key: string; encryptedData: string };
   status: NeedStatus;
 }
 
 export const NeedSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, auto: true },
-  name: String,
+  name: Object,
   status: String,
 });
 

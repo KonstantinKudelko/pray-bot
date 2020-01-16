@@ -41,8 +41,8 @@ const getMainKeyboard = (i18n: I18n) => {
   const mainKeyboardStatistics = i18n.t('keyboards.main.statistics');
   const mainKeyboard = Markup.keyboard([
     [mainKeyboardCreatePrayer, mainKeyboardGetAllNeeds],
-    [mainKeyboardRemind, mainKeyboardAboutUs],
-    [mainKeyboardStatistics],
+    [mainKeyboardRemind, mainKeyboardStatistics],
+    [mainKeyboardAboutUs],
   ])
     .resize()
     .extra();
