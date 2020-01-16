@@ -19,7 +19,7 @@ startScene.enter(async ({ from, reply, i18n }: ContextMessageUpdate) => {
   } else {
     const newUser = new UserModel({
       _id: id,
-      name: `${first_name} ${last_name}`,
+      name: `${first_name} ${last_name ? last_name : ''}`,
       username,
       totalNeeds: 0,
       needs: [],
