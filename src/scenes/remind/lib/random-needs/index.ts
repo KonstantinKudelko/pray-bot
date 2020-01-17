@@ -15,7 +15,7 @@ export const getRandomNeeds = (needs: Need[], qty = 5): Need[] => {
   return shuffledNeeds.slice(0, qty);
 };
 
-export const getRandomNeedsList = (needs: Need[], prayedButtonText: string) => {
+export const getRandomNeedsList = (needs: Need[]) => {
   return Extra.HTML().markup((m: Markup) => {
     return m.inlineKeyboard(
       [
@@ -24,7 +24,7 @@ export const getRandomNeedsList = (needs: Need[], prayedButtonText: string) => {
         ]),
         [
           {
-            text: prayedButtonText,
+            text: '🙏',
             callback_data: JSON.stringify({ action: 'prayed', payload: [] }),
             hide: !needs.length,
           },

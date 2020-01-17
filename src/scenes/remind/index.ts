@@ -6,6 +6,8 @@ import { SCENES } from '../lib/constants';
 import { UserModel } from '../../models';
 import { setReminder } from './lib/set-reminder';
 import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
+import { deleteReminder } from './lib/delete-reminder';
+import { needsQueue } from './lib/reminder-queue';
 
 export const remindScene = new Scene(SCENES.REMIND);
 
@@ -47,19 +49,19 @@ remindScene.hears(
     const splittedTime = time.split(':');
     const hour = splittedTime[0];
     const minute = splittedTime[1];
-    const cron = `${minute} ${hour} * * *`;
+    const newCronTime = `${minute} ${hour} * * *`;
 
-    const { timezone } = await UserModel.findByIdAndUpdate(
+    const { timezone, cron } = await UserModel.findByIdAndUpdate(
       {
         _id: id.toString(),
       },
       {
-        $set: { cron },
+        $set: { cron: newCronTime },
       },
-      { new: true },
     );
 
-    await setReminder(id.toString(), i18n, cron, timezone);
+    await deleteReminder();
+    await setReminder(id.toString(), i18n, newCronTime, timezone);
 
     await reply(
       `${i18n.t('scenes.remind.reminder_info')} \n${i18n.t(
