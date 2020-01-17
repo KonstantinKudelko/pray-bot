@@ -4,13 +4,13 @@ import { Need, NeedSchema } from './need.model';
 
 export interface User extends Document {
   name: string;
+  cron: string;
   needs: Types.Array<Need>;
   username: string;
   timezone: string;
   createdAt: string;
   totalNeeds: number;
   totalPrayers: number;
-  timeForReminder: string;
   totalAnsweredNeeds: number;
 }
 
@@ -18,12 +18,12 @@ export const UserSchema = new Schema(
   {
     _id: String,
     name: String,
+    cron: { type: String, default: '' },
     needs: [NeedSchema],
     username: String,
     timezone: String,
     totalNeeds: { type: Number, default: 0 },
     totalPrayers: { type: Number, default: 0 },
-    timeForReminder: String,
     totalAnsweredNeeds: { type: Number, default: 0 },
   },
   { _id: false, timestamps: true },

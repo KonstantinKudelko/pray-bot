@@ -2,6 +2,7 @@ import Scene from 'telegraf/scenes/base';
 import { Document } from 'mongoose';
 import { ContextMessageUpdate } from 'telegraf';
 
+import { decrypt } from '../lib/encrypt';
 import { UserModel } from '../../models';
 import { exposeNeed } from './lib/need-middleware';
 import { getNeedsList } from './lib/need-list';
@@ -30,7 +31,10 @@ listNeedScene.action(
   async ({ i18n, editMessageText, callbackQuery, need }: ContextMessageUpdate) => {
     const { payload } = JSON.parse(callbackQuery.data);
 
-    await editMessageText(`${need.name}`, getNeedControlMenu(i18n, need, payload));
+    await editMessageText(
+      `${decrypt(need.name)}`,
+      getNeedControlMenu(i18n, need, payload),
+    );
   },
 );
 

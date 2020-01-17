@@ -3,8 +3,8 @@ import tzlookup from 'tz-lookup';
 import { ContextMessageUpdate } from 'telegraf';
 
 import { SCENES } from '../lib/constants';
-import { reminder } from './lib/reminder';
 import { UserModel } from '../../models';
+import { setReminder } from './lib/set-reminder';
 import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
 
 export const remindScene = new Scene(SCENES.REMIND);
@@ -44,26 +44,27 @@ remindScene.hears(
     const { id } = from;
     const time = match[0];
     const { mainKeyboard } = getMainKeyboard(i18n);
+    const splittedTime = time.split(':');
+    const hour = splittedTime[0];
+    const minute = splittedTime[1];
+    const cron = `${minute} ${hour} * * *`;
 
-    const { timezone, timeForReminder } = await UserModel.findByIdAndUpdate(
+    const { timezone } = await UserModel.findByIdAndUpdate(
       {
         _id: id.toString(),
       },
       {
-        $set: { timeForReminder: time },
+        $set: { cron },
       },
       { new: true },
     );
-    const splittedTime = timeForReminder.split(':');
-    const hour = splittedTime[0];
-    const minute = splittedTime[1];
 
-    reminder(id.toString(), i18n, hour, minute, timezone);
+    await setReminder(id.toString(), i18n, cron, timezone);
 
     await reply(
       `${i18n.t('scenes.remind.reminder_info')} \n${i18n.t(
         'common.time',
-      )} ${timeForReminder} \n${i18n.t('common.timezone')} ${timezone} `,
+      )} ${time} \n${i18n.t('common.timezone')} ${timezone} `,
       mainKeyboard,
     );
   },
