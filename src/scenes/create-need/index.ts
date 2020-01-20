@@ -32,6 +32,12 @@ createNeedScene.on(
     const { mainKeyboard } = getMainKeyboard(i18n);
     const user = await UserModel.findById(id);
 
+    if (text.length > 250) {
+      await reply(i18n.t('scenes.create_need.error_message'));
+
+      return;
+    }
+
     ++user.totalNeeds;
     user.needs.push(
       new NeedModel({

@@ -6,7 +6,8 @@
     },
     "create_need": {
       "welcome": "Create a need by sending it as a message to us.",
-      "success_message": "Hurray, your prayer is created 🎉 \nNow you can track its status!"
+      "success_message": "Hurray, your prayer is created 🎉 \nNow you can track its status!",
+      "error_message": "❌ Need should not be too long"
     },
     "list_need": {
       "welcome": "Here you can track the status of your prayers. \n\n🙏 - means that you are actively praying for this need. \n✅ - means that the Father answered your need.",
@@ -28,7 +29,7 @@
     },
     "statistics": {
       "app_usage_in_days": "You use the bot: ",
-      "days": "days 🌞",
+      "days": "🌞",
       "qty_needs": "🔸 Number of needs: ",
       "qty_answers": "🔸 Number of answered needs: ",
       "qty_prayers": "🔸 Number of prayers uttered: ",
