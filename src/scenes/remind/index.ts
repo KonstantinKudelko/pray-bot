@@ -1,21 +1,30 @@
 import Scene from 'telegraf/scenes/base';
 import tzlookup from 'tz-lookup';
+import { match } from 'telegraf-i18n';
 import { ContextMessageUpdate } from 'telegraf';
 
 import { SCENES } from '../lib/constants';
-import { UserModel } from '../../models';
 import { setReminder } from './lib/set-reminder';
-import { getBackKeyboard, getMainKeyboard } from '../../lib/keyboards';
-import { deleteReminder } from './lib/delete-reminder';
-import { needsQueue } from './lib/reminder-queue';
+import { getBackKeyboard } from '../../lib/keyboards';
+import { getReminderKeyboard } from './lib/keyboard';
+import { UserModel, ReminderModel } from '../../models';
 
 export const remindScene = new Scene(SCENES.REMIND);
 
 remindScene.enter(async ({ reply, i18n }: ContextMessageUpdate) => {
-  const { backKeyboard } = getBackKeyboard(i18n);
+  const { reminderKeyboard } = getReminderKeyboard(i18n);
 
-  await reply(i18n.t('scenes.remind.welcome'), backKeyboard);
+  await reply(i18n.t('scenes.remind.welcome'), reminderKeyboard);
 });
+
+remindScene.hears(
+  match('keyboards.reminder.create'),
+  async ({ reply, i18n }: ContextMessageUpdate) => {
+    const { backKeyboard } = getBackKeyboard(i18n);
+
+    await reply(i18n.t('scenes.remind.create_welcome'), backKeyboard);
+  },
+);
 
 remindScene.on(
   'location',
@@ -44,30 +53,30 @@ remindScene.hears(
   /\d+:\d+/,
   async ({ i18n, from, reply, match }: ContextMessageUpdate) => {
     const { id } = from;
+    const { reminderKeyboard } = getReminderKeyboard(i18n);
+
+    const user = await UserModel.findById(id);
+    const timezone = user.timezone;
     const time = match[0];
-    const { mainKeyboard } = getMainKeyboard(i18n);
     const splittedTime = time.split(':');
     const hour = splittedTime[0];
     const minute = splittedTime[1];
-    const newCronTime = `${minute} ${hour} * * *`;
+    const cronString = `${minute} ${hour} * * *`;
+    const job = await setReminder(id.toString(), i18n, cronString, timezone);
 
-    const { timezone, cron } = await UserModel.findByIdAndUpdate(
-      {
-        _id: id.toString(),
-      },
-      {
-        $set: { cron: newCronTime },
-      },
+    user.reminders.push(
+      new ReminderModel({
+        _id: job.id,
+        cron: cronString,
+      }),
     );
 
-    await deleteReminder();
-    await setReminder(id.toString(), i18n, newCronTime, timezone);
-
+    await user.save();
     await reply(
       `${i18n.t('scenes.remind.reminder_info')} \n${i18n.t(
         'common.time',
       )} ${time} \n${i18n.t('common.timezone')} ${timezone} `,
-      mainKeyboard,
+      reminderKeyboard,
     );
   },
 );

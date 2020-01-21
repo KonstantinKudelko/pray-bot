@@ -1,37 +1,6 @@
 import I18n from 'telegraf-i18n';
 
-import { Extra, Markup } from 'telegraf';
-
-export const LANGUAGE_ACTION = 'LANGUAGE_CHANGE';
-const LANGUAGES = Object.freeze({
-  EN: {
-    code: 'en',
-    label: '🇺🇸 English',
-  },
-  RU: {
-    code: 'ru',
-    label: '🇷🇺 Русский',
-  },
-});
-
-const getLanguageKeyboard = () =>
-  Extra.HTML().markup((m: Markup) =>
-    m.inlineKeyboard(
-      [
-        m.callbackButton(
-          LANGUAGES.EN.label,
-          JSON.stringify({ action: LANGUAGE_ACTION, lang: LANGUAGES.EN.code }),
-          false,
-        ),
-        m.callbackButton(
-          LANGUAGES.RU.label,
-          JSON.stringify({ action: LANGUAGE_ACTION, lang: LANGUAGES.RU.code }),
-          false,
-        ),
-      ],
-      {},
-    ),
-  );
+import { Markup } from 'telegraf';
 
 const getMainKeyboard = (i18n: I18n) => {
   const mainKeyboardRemind = i18n.t('keyboards.main.remind');
@@ -67,4 +36,4 @@ const getBackKeyboard = (i18n: I18n) => {
   };
 };
 
-export { getMainKeyboard, getLanguageKeyboard, getBackKeyboard };
+export { getMainKeyboard, getBackKeyboard };
