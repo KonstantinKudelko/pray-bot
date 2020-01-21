@@ -8,6 +8,9 @@ import { setReminder } from './lib/set-reminder';
 import { getBackKeyboard } from '../../lib/keyboards';
 import { getReminderKeyboard } from './lib/keyboard';
 import { UserModel, ReminderModel } from '../../models';
+import { getRemindersList } from './lib/reminders-list';
+import { getReminderControlMenu } from './lib/reminder-control-menu';
+import { deleteReminder } from './lib/delete-reminder';
 
 export const remindScene = new Scene(SCENES.REMIND);
 
@@ -62,12 +65,12 @@ remindScene.hears(
     const hour = splittedTime[0];
     const minute = splittedTime[1];
     const cronString = `${minute} ${hour} * * *`;
-    const job = await setReminder(id.toString(), i18n, cronString, timezone);
 
+    await setReminder(id.toString(), i18n, cronString, timezone);
     user.reminders.push(
       new ReminderModel({
-        _id: job.id,
-        cron: cronString,
+        time,
+        _id: cronString,
       }),
     );
 
@@ -78,5 +81,64 @@ remindScene.hears(
       )} ${time} \n${i18n.t('common.timezone')} ${timezone} `,
       reminderKeyboard,
     );
+  },
+);
+
+remindScene.hears(
+  match('keyboards.reminder.list'),
+  async ({ from, reply, i18n }: ContextMessageUpdate) => {
+    const { id } = from;
+    const { reminders } = await UserModel.findById(id);
+    const remindersList = getRemindersList(reminders, i18n);
+
+    if (Array.isArray(reminders) && reminders.length) {
+      await reply(i18n.t('scenes.remind.list_welcome'), remindersList);
+    } else {
+      await reply(i18n.t('scenes.remind.list_empty_welcome'));
+    }
+  },
+);
+
+remindScene.action(
+  /reminder/,
+  async ({ i18n, editMessageText, callbackQuery }: ContextMessageUpdate) => {
+    const { p } = JSON.parse(callbackQuery.data);
+
+    await editMessageText(
+      `${i18n.t('scenes.remind.reminder_type')} ${p.time}`,
+      getReminderControlMenu(i18n, p.id),
+    );
+  },
+);
+
+remindScene.action(
+  /back/,
+  async ({ i18n, from, editMessageText }: ContextMessageUpdate) => {
+    const { id } = from;
+    const { reminders } = await UserModel.findById(id);
+    const remindersList = getRemindersList(reminders, i18n);
+
+    await editMessageText(i18n.t('scenes.remind.list_welcome'), remindersList);
+  },
+);
+
+remindScene.action(
+  /delete/,
+  async ({ i18n, from, editMessageText, callbackQuery }: ContextMessageUpdate) => {
+    const { id } = from;
+    const { payload } = JSON.parse(callbackQuery.data);
+    const user = await UserModel.findById(id);
+    const reminders = user.reminders;
+    const updatedReminders = reminders.pull(payload);
+    const remindersList = getRemindersList(updatedReminders, i18n);
+
+    await user.save();
+    await deleteReminder(payload, user.timezone);
+
+    if (Array.isArray(reminders) && reminders.length) {
+      await editMessageText(i18n.t('scenes.remind.list_welcome'), remindersList);
+    } else {
+      await editMessageText(i18n.t('scenes.remind.list_empty_welcome'));
+    }
   },
 );

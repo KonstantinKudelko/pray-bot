@@ -12,18 +12,20 @@
     "list_need": {
       "welcome": "Here you can track the status of your prayers. \n\n🙏 - means that you are actively praying for this need. \n✅ - means that the Father answered your need.",
       "available_action": "Try to click on a prayer. \nSo you can change her status or delete her.",
-      "delete_button": "Delete ❌",
       "edit_status_button": "God answered 💫",
       "empty_list_of_needs": "You have no created needs. Press 🙏 to create a need."
     },
     "remind": {
       "welcome": "Manage your reminders here.",
       "create_welcome": "Send your location in response to this message.",
+      "list_welcome": "Here you can check all reminders and delete those that you no longer need.",
+      "list_empty_welcome": "You have no created reminders. Press 🔊 and create it",
       "success_timezone": "Successfully set timezone:",
       "set_time": "A time has been set at which the bot will remind you to pray. \n\nTime for determining a specific format, for example: \n\n14:20 \n01:30  \n22:00 \n00:00",
       "reminder_info": "All the necessary data is installed 🎉 \n\nThe bot will select several random needs and remind you to pray for them daily according to your data: \n",
       "reminder_message": "Pray to the Father for your needs 🙏",
-      "prayed_success_message": "Do not weaken in diligence (Romans 12:11) 🛡"
+      "prayed_success_message": "Do not weaken in diligence (Romans 12:11) 🛡",
+      "reminder_type": "🌓 Daily: "
     },
     "about_us": {
       "welcome": "We are a Christian resource 📖 \n http://instagram.com/ke.podcast \n\nOur efforts are aimed at developing the Christian community of Russian-speaking countries. We try to make healthy products for the community and talk about Christ out loud! \n\nIf you notice any errors, you can tell us about it here 🐛 \nke.podcasting@gmail.com \n\nYou can find the source code of the bot here 💻 \nhttps://github.com/ke-community/pray-bot \n\nIf you want to support us, you can do it on patreon 💰 \nhttps://www.patreon.com/kepodcast"
@@ -56,6 +58,7 @@
   "common": {
     "time": "🕔 Time:",
     "timezone": "📍 Timezone:",
+    "delete_button": "Delete ❌",
     "language_updated": "Language successfully changed 🙌",
     "middleware_message": "Create prayers, track their status and pray with us 🚀"
   }
