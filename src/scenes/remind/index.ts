@@ -60,11 +60,19 @@ remindScene.hears(
 
     const user = await UserModel.findById(id);
     const timezone = user.timezone;
+    const reminders = user.reminders;
     const time = match[0];
     const splittedTime = time.split(':');
     const hour = splittedTime[0];
     const minute = splittedTime[1];
     const cronString = `${minute} ${hour} * * *`;
+    const isExistingReminder = reminders.find(reminder => reminder._id === cronString);
+
+    if (isExistingReminder) {
+      await reply(i18n.t('scenes.remind.already_existing_reminder_time'));
+
+      return;
+    }
 
     await setReminder(id.toString(), i18n, cronString, timezone);
     user.reminders.push(
