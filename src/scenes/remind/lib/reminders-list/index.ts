@@ -3,12 +3,12 @@ import { Markup, Extra } from 'telegraf';
 
 import { Reminder } from '../../../../models';
 
-export const getRemindersList = (reminders: Reminder[], i18n: I18n) =>
+export const getRemindersList = (timezone: string, reminders: Reminder[], i18n: I18n) =>
   Extra.HTML().markup((m: Markup) =>
     m.inlineKeyboard(
       reminders.map(x => [
         m.callbackButton(
-          `${i18n.t('scenes.remind.reminder_type')} ${x.time}`,
+          `${i18n.t('scenes.remind.reminder_type')} ${x.time}  📍 ${timezone}`,
           JSON.stringify({ a: 'reminder', p: { id: x._id, time: x.time } }),
           !reminders.length,
         ),

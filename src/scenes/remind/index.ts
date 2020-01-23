@@ -96,8 +96,8 @@ remindScene.hears(
   match('keyboards.reminder.list'),
   async ({ from, reply, i18n }: ContextMessageUpdate) => {
     const { id } = from;
-    const { reminders } = await UserModel.findById(id);
-    const remindersList = getRemindersList(reminders, i18n);
+    const { reminders, timezone } = await UserModel.findById(id);
+    const remindersList = getRemindersList(timezone, reminders, i18n);
 
     if (Array.isArray(reminders) && reminders.length) {
       await reply(i18n.t('scenes.remind.list_welcome'), remindersList);
@@ -141,7 +141,7 @@ remindScene.action(
     const remindersList = getRemindersList(updatedReminders, i18n);
 
     await user.save();
-    await deleteReminder(payload, user.timezone);
+    await deleteReminder(id.toString(), payload, user.timezone);
 
     if (Array.isArray(reminders) && reminders.length) {
       await editMessageText(i18n.t('scenes.remind.list_welcome'), remindersList);

@@ -6,7 +6,7 @@ import { getRandomNeeds, getRandomNeedsList } from '../random-needs';
 
 export const needsQueue = new Queue('needs_queue', process.env.REDIS_CONNECTION_STRING);
 
-needsQueue.process(async job => {
+needsQueue.process('*', async job => {
   const { id, message } = job.data;
   const { needs } = await UserModel.findById(id);
   const randomNeeds = getRandomNeeds(needs);
