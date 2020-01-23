@@ -123,8 +123,8 @@ remindScene.action(
   /back/,
   async ({ i18n, from, editMessageText }: ContextMessageUpdate) => {
     const { id } = from;
-    const { reminders } = await UserModel.findById(id);
-    const remindersList = getRemindersList(reminders, i18n);
+    const { reminders, timezone } = await UserModel.findById(id);
+    const remindersList = getRemindersList(timezone, reminders, i18n);
 
     await editMessageText(i18n.t('scenes.remind.list_welcome'), remindersList);
   },
@@ -136,9 +136,10 @@ remindScene.action(
     const { id } = from;
     const { payload } = JSON.parse(callbackQuery.data);
     const user = await UserModel.findById(id);
+    const timezone = user.timezone;
     const reminders = user.reminders;
     const updatedReminders = reminders.pull(payload);
-    const remindersList = getRemindersList(updatedReminders, i18n);
+    const remindersList = getRemindersList(timezone, updatedReminders, i18n);
 
     await user.save();
     await deleteReminder(id.toString(), payload, user.timezone);
