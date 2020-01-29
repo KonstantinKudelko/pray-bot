@@ -9,16 +9,9 @@ import Stage from 'telegraf/stage';
 import { bot } from './bot';
 import { logger } from './lib/logger';
 import { getMainKeyboard } from './lib/keyboards';
-import {
-  SCENES,
-  startScene,
-  remindScene,
-  aboutUsScene,
-  listNeedScene,
-  createNeedScene,
-  statisticsScene,
-} from './scenes';
+import { SCENES, startScene, remindScene, aboutUsScene, statisticsScene } from './scenes';
 import { UserModel } from './models';
+import { needScene } from './scenes/need';
 
 connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
@@ -35,11 +28,10 @@ connect(process.env.DB_CONNECTION_STRING, {
 
 connection.on('open', () => {
   const stage = new Stage([
+    needScene,
     startScene,
     remindScene,
     aboutUsScene,
-    listNeedScene,
-    createNeedScene,
     statisticsScene,
   ]);
 
@@ -57,12 +49,8 @@ connection.on('open', () => {
 
   bot.start(async ({ scene }: ContextMessageUpdate) => scene.enter(SCENES.START));
   bot.hears(
-    match('keyboards.main.create'),
-    async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.CREATE_NEED),
-  );
-  bot.hears(
-    match('keyboards.main.list_needs'),
-    async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.LIST_NEED),
+    match('keyboards.main.need'),
+    async ({ scene }: ContextMessageUpdate) => await scene.enter(SCENES.NEED),
   );
   bot.hears(
     match('keyboards.main.remind'),

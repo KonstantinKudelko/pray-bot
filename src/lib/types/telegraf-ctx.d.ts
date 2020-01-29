@@ -11,7 +11,9 @@ declare module 'telegraf' {
     };
     widget: any;
     session: {
+      need: Need;
       needs: Need[];
+      isAnswerNeedMode: boolean;
     };
     need: Need;
   }

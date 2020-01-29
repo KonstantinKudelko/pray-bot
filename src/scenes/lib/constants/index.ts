@@ -1,7 +1,6 @@
 export const SCENES = Object.freeze({
+  NEED: 'need',
   START: 'start',
-  LIST_NEED: 'list_need',
-  CREATE_NEED: 'create_need',
   REMIND: 'remind',
   ABOUT_US: 'about_us',
   STATISTICS: 'statistics',

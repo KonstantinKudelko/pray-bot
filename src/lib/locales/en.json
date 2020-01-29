@@ -4,16 +4,20 @@
       "welcome": "Hi 👋 \nWe are glad that you have joined us! Here you can create prayer needs, track their status, and we will remind you to pray for them 🙏",
       "welcome_back": "Hi, we are glad to see you again 👋 \nCheck your prayer needs and pray!"
     },
-    "create_need": {
-      "welcome": "Create a need by sending it as a message to us.",
-      "success_message": "Hurray, your prayer is created 🎉 \nNow you can track its status!",
-      "error_message": "❌ Need should not be too long"
-    },
-    "list_need": {
-      "welcome": "Here you can track the status of your prayers. \n\n🙏 - means that you are actively praying for this need. \n✅ - means that the Father answered your need.",
-      "available_action": "Try to click on a prayer. \nSo you can change her status or delete her.",
+    "need": {
+      "need_label": "*Need:*",
+      "answer_label": "*Answer:*",
+      "error": "❌ Your text not should be too long",
+      "welcome": "Manage your needs here",
+      "create_need": "Create a need by sending it as a message to us",
+      "create_need_success": "Hurray, your prayer is created 🎉",
+      "empty_active_needs": "You have no created needs. Press ☄️ to create a need.",
+      "active_needs_welcome": "Pray constantly ✊",
+      "empty_answered_needs": "You have no answered needs. Father will answer. Watch. 👀",
+      "answered_needs_welcome": "Taste the good Lord ☺️",
       "edit_status_button": "God answered 💫",
-      "empty_list_of_needs": "You have no created needs. Press 🙏 to create a need."
+      "write_answer": "Write the answer to your prayer 🎉",
+      "create_answer_success": "After a while, you can be inspired by reading these answers 🔥"
     },
     "remind": {
       "welcome": "Manage your reminders here.",
@@ -42,6 +46,7 @@
   },
   "keyboards": {
     "main": {
+      "need": "Needs 🙏",
       "create": "Create need 🙏",
       "list_needs": "Check needs 👀",
       "remind": "Remind ⏰",
@@ -54,6 +59,11 @@
     "reminder": {
       "create": "Create a reminder 🔊",
       "list": "My reminders 🗂"
+    },
+    "need": {
+      "list_active_needs": "Active needs 🙏",
+      "list_answered_needs": "Answered needs 💫",
+      "create": "Create a need ☄️"
     }
   },
   "common": {
