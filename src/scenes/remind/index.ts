@@ -31,22 +31,13 @@ remindScene.hears(
 
 remindScene.on(
   'location',
-  async ({ i18n, from, reply, message }: ContextMessageUpdate) => {
-    const { id } = from;
+  async ({ i18n, reply, message, session }: ContextMessageUpdate) => {
     const { location } = message;
     const { latitude, longitude } = location;
     const timezone = tzlookup(latitude, longitude);
     const { backKeyboard } = getBackKeyboard(i18n);
 
-    await UserModel.findByIdAndUpdate(
-      {
-        _id: id.toString(),
-      },
-      {
-        $set: { timezone },
-      },
-    );
-
+    session.timezone = timezone;
     await reply(`${i18n.t('scenes.remind.success_timezone')} ${timezone} 📍`);
     await reply(i18n.t('scenes.remind.set_time'), backKeyboard);
   },
@@ -54,12 +45,11 @@ remindScene.on(
 
 remindScene.hears(
   /\d+:\d+/,
-  async ({ i18n, from, reply, match }: ContextMessageUpdate) => {
+  async ({ i18n, from, reply, match, session }: ContextMessageUpdate) => {
     const { id } = from;
     const { reminderKeyboard } = getReminderKeyboard(i18n);
 
     const user = await UserModel.findById(id);
-    const timezone = user.timezone;
     const reminders = user.reminders;
     const time = match[0];
     const splittedTime = time.split(':');
@@ -67,6 +57,7 @@ remindScene.hears(
     const minute = splittedTime[1];
     const cronString = `${minute} ${hour} * * *`;
     const isExistingReminder = reminders.find(reminder => reminder._id === cronString);
+    const timezone = session.timezone;
 
     if (isExistingReminder) {
       await reply(i18n.t('scenes.remind.already_existing_reminder_time'));
@@ -78,6 +69,7 @@ remindScene.hears(
     user.reminders.push(
       new ReminderModel({
         time,
+        timezone,
         _id: cronString,
       }),
     );
@@ -96,8 +88,8 @@ remindScene.hears(
   match('keyboards.reminder.list'),
   async ({ from, reply, i18n }: ContextMessageUpdate) => {
     const { id } = from;
-    const { reminders, timezone } = await UserModel.findById(id);
-    const remindersList = getRemindersList(timezone, reminders, i18n);
+    const { reminders } = await UserModel.findById(id);
+    const remindersList = getRemindersList(reminders, i18n);
 
     if (Array.isArray(reminders) && reminders.length) {
       await reply(i18n.t('scenes.remind.list_welcome'), remindersList);
@@ -123,8 +115,8 @@ remindScene.action(
   /back/,
   async ({ i18n, from, editMessageText }: ContextMessageUpdate) => {
     const { id } = from;
-    const { reminders, timezone } = await UserModel.findById(id);
-    const remindersList = getRemindersList(timezone, reminders, i18n);
+    const { reminders } = await UserModel.findById(id);
+    const remindersList = getRemindersList(reminders, i18n);
 
     await editMessageText(i18n.t('scenes.remind.list_welcome'), remindersList);
   },
@@ -136,13 +128,13 @@ remindScene.action(
     const { id } = from;
     const { payload } = JSON.parse(callbackQuery.data);
     const user = await UserModel.findById(id);
-    const timezone = user.timezone;
     const reminders = user.reminders;
+    const reminderToDelete = reminders.find(x => x._id === payload);
     const updatedReminders = reminders.pull(payload);
-    const remindersList = getRemindersList(timezone, updatedReminders, i18n);
+    const remindersList = getRemindersList(updatedReminders, i18n);
 
     await user.save();
-    await deleteReminder(id.toString(), payload, user.timezone);
+    await deleteReminder(id.toString(), payload, reminderToDelete.timezone);
 
     if (Array.isArray(reminders) && reminders.length) {
       await editMessageText(i18n.t('scenes.remind.list_welcome'), remindersList);

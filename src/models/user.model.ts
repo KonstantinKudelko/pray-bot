@@ -7,7 +7,6 @@ export interface User extends Document {
   name: string;
   needs: Types.Array<Need>;
   username: string;
-  timezone: string;
   createdAt: string;
   reminders: Types.Array<Reminder>;
   totalNeeds: number;
@@ -21,7 +20,6 @@ export const UserSchema = new Schema(
     name: String,
     needs: [NeedSchema],
     username: String,
-    timezone: String,
     reminders: [ReminderSchema],
     totalNeeds: { type: Number, default: 0 },
     totalPrayers: { type: Number, default: 0 },

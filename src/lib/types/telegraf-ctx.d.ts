@@ -13,6 +13,7 @@ declare module 'telegraf' {
     session: {
       need: Need;
       needs: Need[];
+      timezone: string;
       isAnswerNeedMode: boolean;
     };
     need: Need;
