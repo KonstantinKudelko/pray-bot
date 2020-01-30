@@ -100,6 +100,24 @@ remindScene.hears(
 );
 
 remindScene.action(
+  /delete_all_reminders/,
+  async ({ i18n, from, reply }: ContextMessageUpdate) => {
+    const { id } = from;
+    const user = await UserModel.findById(id);
+    const reminders = user.reminders;
+
+    for (const reminder of reminders) {
+      await deleteReminder(id.toString(), reminder.id, reminder.timezone);
+    }
+
+    reminders.remove({});
+    await user.save();
+
+    await reply(i18n.t('scenes.remind.delete_all_reminders'));
+  },
+);
+
+remindScene.action(
   /reminder/,
   async ({ i18n, editMessageText, callbackQuery }: ContextMessageUpdate) => {
     const { p } = JSON.parse(callbackQuery.data);
