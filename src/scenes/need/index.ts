@@ -42,15 +42,15 @@ needScene.hears(
   async ({ from, reply, i18n }: ContextMessageUpdate) => {
     const { id } = from;
     const user = await UserModel.findById(id);
+    const answeredNeeds = getNeedsByStatus(user.needs, NEED_STATUS.ANSWERED);
 
-    if (user.needs && user.needs.length) {
-      const answeredNeeds = getNeedsByStatus(user.needs, NEED_STATUS.ANSWERED);
+    if (answeredNeeds.length) {
       await reply(
         i18n.t('scenes.need.answered_needs_welcome'),
         getNeedsList(answeredNeeds),
       );
     } else {
-      await reply(i18n.t('scenes.need.answered_active_needs'));
+      await reply(i18n.t('scenes.need.empty_answered_needs'));
     }
   },
 );
@@ -60,10 +60,9 @@ needScene.hears(
   async ({ from, reply, i18n }: ContextMessageUpdate) => {
     const { id } = from;
     const user = await UserModel.findById(id);
+    const activeNeeds = getNeedsByStatus(user.needs, NEED_STATUS.ACTIVE);
 
-    if (user.needs && user.needs.length) {
-      const activeNeeds = getNeedsByStatus(user.needs, NEED_STATUS.ACTIVE);
-
+    if (activeNeeds.length) {
       await reply(i18n.t('scenes.need.active_needs_welcome'), getNeedsList(activeNeeds));
     } else {
       await reply(i18n.t('scenes.need.empty_active_needs'));
