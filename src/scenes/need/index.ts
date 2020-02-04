@@ -3,12 +3,12 @@ import { match } from 'telegraf-i18n';
 import { Document } from 'mongoose';
 import { ContextMessageUpdate, Stage } from 'telegraf';
 
-import { encrypt, decrypt } from '../lib/encrypt';
+import { decrypt } from '../lib/encrypt';
+import { UserModel } from '../../models';
 import { getNeedKeyboard } from './keyboard';
 import { getMainKeyboard } from '../../lib/keyboards';
 import { getNeedControlMenu } from './need-control-menu';
 import { SCENES, NEED_STATUS } from '../lib/constants';
-import { NeedModel, UserModel } from '../../models';
 import { getNeedsByStatus, getNeedsList } from './need-list';
 import { exposeNeed, setCreatingNeedMode, setAnsweredNeedMode } from './need-middleware';
 import { handleCreatingNeedMode, handleAnsweredNeedMode } from './need-mode-actions';
@@ -112,9 +112,9 @@ needScene.action(
 
     if (need.answer) {
       await replyWithMarkdown(
-        `${i18n.t('scenes.need.need_label')} \n ${`${decrypt(need.name)}`} \n\n${i18n.t(
+        `${i18n.t('scenes.need.need_label')}\n${`${decrypt(need.name)}`} \n\n${i18n.t(
           'scenes.need.answer_label',
-        )} \n ${need.answer}`,
+        )}\n${decrypt(need.answer)}`,
       );
     } else {
       await editMessageText(

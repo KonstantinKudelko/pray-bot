@@ -10,14 +10,14 @@
       "error": "❌ Your text not should be too long",
       "welcome": "Manage your needs here",
       "create_need": "Create a need by sending it as a message to us",
-      "create_need_success": "Hurray, your prayer is created 🎉",
+      "create_need_success": "Hurray, your need is created 🎉",
       "empty_active_needs": "You have no created needs. Press ☄️ to create a need.",
       "active_needs_welcome": "Pray constantly ✊",
       "empty_answered_needs": "You have no answered needs. Father will answer. Watch 👀",
-      "answered_needs_welcome": "Taste the good Lord ☺️",
+      "answered_needs_welcome": "\"Taste and see that the Lord is good...\" ☺️",
       "edit_status_button": "God answered 💫",
-      "write_answer": "Write the answer to your prayer 🎉",
-      "create_answer_success": "After a while, you can be inspired by reading these answers 🔥"
+      "write_answer": "Write the answer to your need 🎉",
+      "create_answer_success": "After a while, you will be inspired by reading these answers 🔥"
     },
     "remind": {
       "welcome": "Manage your reminders here.",
@@ -72,6 +72,6 @@
     "timezone": "📍 Timezone:",
     "delete_button": "Delete ❌",
     "language_updated": "Language successfully changed 🙌",
-    "middleware_message": "Create prayers, track their status and pray with us 🚀"
+    "middleware_message": "Create needs, track their status and pray with us 🚀"
   }
 }

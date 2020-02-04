@@ -9,7 +9,7 @@ export const handleAnsweredNeedMode = async (
   needId: string,
   text: string,
 ) => {
-  await ((user.needs as unknown) as Document).id(needId).set({ answer: text });
+  await ((user.needs as unknown) as Document).id(needId).set({ answer: encrypt(text) });
   await user.save();
 };
 
